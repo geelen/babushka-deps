@@ -8,7 +8,7 @@ dep 'chef bootstrap' do
 end
 
 dep 'chef bootstrap config files' do
-  define_var :server_name, :default => shell "hostname -f", :message => "Fully qualified domain name for Chef?"
+  define_var :server_name, :default => shell("hostname -f"), :message => "Fully qualified domain name for Chef?"
   helper :files do
     %w[solo.rb chef.json]
   end

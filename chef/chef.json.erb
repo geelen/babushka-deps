@@ -1,0 +1,14 @@
+// <%= generated_by_babushka %>
+{
+  "bootstrap": {
+    "chef": {
+      "url_type": "http",
+      "init_style": "runit",
+      "path": "/srv/chef",
+      "serve_path": "/srv/chef",
+      "server_fqdn": "#{var :server_name}",
+      "webui_enabled": true
+    }
+  },
+  "run_list": [ "recipe[bootstrap::server]" ]
+}

@@ -1,10 +1,9 @@
 dep 'chef' do
-  requires 'chef gem', 'ohai', 'chef solo', 'chef vhost enabled'
+  requires 'chef gem', 'ohai', 'chef bootstrap', 'chef vhost enabled'
 end
 
-dep 'chef solo' do
-  requires 'chef solo config files'
-  met? { dunno }
+dep 'chef bootstrap' do
+  requires 'chef bootstrap config files'
   meet { sudo "chef-solo -c ~/solo.rb -j ~/chef.json" }
 end
 

@@ -38,5 +38,6 @@ end
 
 gem 'chef gem' do
   installs 'chef'
+  provides 'chef-client', 'chef-solo'
 end
 gem 'ohai'

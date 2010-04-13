@@ -17,7 +17,7 @@ dep 'chef solo config files' do
 end
 
 nginx 'chef vhost enabled' do
-  requires 'vhost configured'
+  requires 'chef vhost configured'
   setup {
     set :chef_vhost_link, (var(:nginx_prefix) / "conf/vhosts/on/chef_admin.conf")
   }

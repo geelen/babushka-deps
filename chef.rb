@@ -7,7 +7,7 @@ dep 'chef bootstrap' do
   meet { sudo "chef-solo -c ~/solo.rb -j ~/chef.json" }
 end
 
-dep 'chef solo config files' do
+dep 'chef bootstrap config files' do
   helper :files do
     %w[solo.rb chef.json]
   end

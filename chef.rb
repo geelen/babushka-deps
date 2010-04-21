@@ -31,7 +31,7 @@ nginx 'chef vhost configured' do
   setup {
     set :chef_vhost_conf, (var(:nginx_prefix) / "conf/vhosts/chef_admin.conf")
   }
-  met? { var(:chef_vhost_conf).exists? }
+  met? { babushka_config? var(:chef_vhost_conf) }
   meet { render_erb "chef/chef_admin_vhost.conf.erb", :to => var(:chef_vhost_conf), :sudo => true }
   after { restart_nginx if var(:chef_vhost_link).exists? }
 end

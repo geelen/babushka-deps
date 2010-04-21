@@ -4,12 +4,8 @@ dep 's3cmd configured', :for => :linux do
   define_var :aws_secret_key
 
   file = "~/.s3cfg"
-  met {
-    file.p.exists?
-  }
-  meet {
-    render_erb "s3cmd/.s3cfg.erb", :to => file
-  }
+  met? { babushka_config? file }
+  meet { render_erb "s3cmd/.s3cfg.erb", :to => file }
 end
 
-pkg 's3cmd'
+pkg 's3cmd', :for => :linux

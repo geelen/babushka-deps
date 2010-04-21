@@ -1,10 +1,12 @@
+#LLLLLLLLLLLLLLLLLLLOL ben
+
 dep 'existing mysql db' do
   requires 'mysql db exists'
 end
 
 dep 'mysql db in correct location', :for => :linux do
   define_var :db_location, :default => '/mnt/mysql'
-  met {
+  met? {
     (var(:db_location) / "ibdata1").exists?
   }
   before {
@@ -26,5 +28,5 @@ end
 dep 'load marketplace backup', :for => :linux do
   requires 's3cmd configured', 'mysql db in correct location'
 
-  
+
 end

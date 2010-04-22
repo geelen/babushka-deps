@@ -1,12 +1,13 @@
 dep 'existing mysql db' do
-  requires 'mysql db exists', 'mysql gem'
+  requires 'mysql db exists 2', 'mysql gem'
   setup {
     definer.requires 'mysql root password' if confirm('Require root password for MySQL?')
     definer.requires 'mysql access' if confirm('Create MySQL user?')
   }
 end
 
-dep 'mysql db exists' do
+# added the '2' because otherwise this is hidden by ben's dep.
+dep 'mysql db exists 2' do
   requires 'mysql software'
   met? { mysql("SHOW DATABASES").split("\n")[1..-1].any? {|l| /\b#{var :db_name}\b/ =~ l } }
   meet { mysql "CREATE DATABASE #{var :db_name}" }

@@ -28,7 +28,7 @@ dep 'user exists' do
       sudo "useradd -m -s /bin/bash -b #{var :home_dir_base} -G admin #{var(:username)}" and
       sudo "chmod 701 #{var(:home_dir_base) / var(:username)}"
       #only changed line
-      sudo "echo -e '#{var(:password)}\n#{var(:password)} | passwd #{var(:username)}"
+      sudo "echo -e '#{var(:password)}\n#{var(:password)}' | passwd #{var(:username)}"
     }
   end
 end

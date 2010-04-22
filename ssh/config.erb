@@ -1,0 +1,3 @@
+Host <%= var(:alias) %>
+  HostName <%= var(:host) %>
+  User <%= var(:user) %><%= "\n  Port #{var(:port)}" unless var(:port) == " " %><%= "\n  IdentityFile #{var(:private_key_file_to_use)}" unless var(:private_key_file_to_use) == " " %>

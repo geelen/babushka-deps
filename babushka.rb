@@ -11,7 +11,6 @@ dep 'reverse babushka sources order' do
 end
 
 dep 'switch babushka install to fork' do
-
   define_var :branch_name, :message => "Which branch to reset to?", :default => "master"
   helper :fork_at_origin do
     shell("git remote -v")[/origin\W*git:\/\/github\.com\/(\w+)\/babushka\.git/, 1]

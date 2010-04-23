@@ -33,8 +33,14 @@ dep 'mysql db in correct location', :for => :linux do
   }
 end
 
-dep 'load marketplace backup', :for => :linux do
-  requires 's3cmd configured', 'mysql db in correct location'
+dep 'load latest backup from s3', :for => :linux do
+  requires 's3cmd configured'
+  met? {
+    
+  }
+  meet {
+
+  }
 end
 
 dep 'mysql root password' do

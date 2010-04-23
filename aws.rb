@@ -9,3 +9,5 @@ dep 's3cmd configured', :for => :linux do
 end
 
 pkg 's3cmd', :for => :linux
+
+pkg 'ec2-api-tools'

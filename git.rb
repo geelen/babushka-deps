@@ -20,3 +20,12 @@ dep 'add remote and switch to tracking branch' do
     }
   }
 end
+
+dep 'git submodules up-to-date' do
+  met? {
+    shell("git submodule").lines.all? { |l| l[/^ /] }
+  }
+  meet {
+    shell("git submodule update --init --recursive")
+  }
+end

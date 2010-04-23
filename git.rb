@@ -23,9 +23,13 @@ end
 
 dep 'git submodules up-to-date' do
   met? {
-    shell("git submodule").lines.all? { |l| l[/^ /] }
+    in_dir(var(:repo)) {
+      shell("git submodule").lines.all? { |l| l[/^ /] }
+    }
   }
   meet {
-    shell("git submodule update --init --recursive")
+    in_dir(var(:repo)) {
+      shell("git submodule update --init --recursive")
+    }
   }
 end

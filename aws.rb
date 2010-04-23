@@ -10,4 +10,6 @@ end
 
 pkg 's3cmd', :for => :linux
 
-pkg 'ec2-api-tools'
+pkg 'ec2-api-tools' do
+  provides 'ec2-run-instances', 'ec2-create-volume'
+end

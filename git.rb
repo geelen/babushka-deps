@@ -29,7 +29,7 @@ dep 'git submodules up-to-date' do
   }
   meet {
     in_dir(var(:repo)) {
-      shell("git submodule update --init --recursive")
+      shell("git submodule update --init")
     }
   }
 end

@@ -1,5 +1,5 @@
 #gems that aren't defined properly in environment.rb or a bundler file
-marketplace_gems = %w[right_aws hpricot json money cgi_multipart_eof_fix chronic paypal erubis flog flay metric_fu]
+marketplace_gems = %w[right_aws hpricot json money cgi_multipart_eof_fix chronic paypal erubis flog flay metric_fu ruby-prof]
 
 marketplace_gems.each { |g| gem(g) { provides [] } }
 

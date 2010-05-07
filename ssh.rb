@@ -1,7 +1,5 @@
 dep 'SSH alias' do
   define_var :ssh_config_file, :default => '~/.ssh/config'
-  define_var :hostname
-  define_var :alias
   define_var :user, :default => shell('whoami')
   friendly_blank_msg = '(just put a single space to indicate blank and use the default)'
   define_var :port, :message => "port for ssh alias #{friendly_blank_msg}"

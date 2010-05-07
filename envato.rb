@@ -1,4 +1,6 @@
-gem 'right_aws'
+gem 'right_aws' do
+  provides []
+end
 
 dep 'marketplace configured' do
   requires 'right_aws', 'rails app'

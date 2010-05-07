@@ -12,7 +12,6 @@ dep 'marketplace configured' do
   setup {
     set :username, 'app'
     set :nginx_prefix, '/opt/nginx'
-    set :domain, 'staging-ec2.activeden.net'
     set :passenger_repo_root, '~/current'
     set :rails_root, '~/current'
     set :rails_env, 'staging'
@@ -20,8 +19,16 @@ dep 'marketplace configured' do
   }
 end
 
-dep 'rails user configured' do
-  requires {
-    'switch babushka install to fork'
+dep 'envato app user configured' do
+  requires 'switch babushka install to fork', 'system', 'user exists', 'user setup'
+  setup {
+    set :branch_name, 'master'
+    set :fork_name, 'geelen'
+    set :username, 'app'
+    set :github_user, 'geelen'
+    set :dot_files_repo, 'dot-files'
+  }
+  after {
+    definer.requires 'writable install location'
   }
 end

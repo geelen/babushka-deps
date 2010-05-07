@@ -26,6 +26,8 @@ dep 'envato server configured' do
     set :fork_name, 'geelen'
     set :username, 'app'
     set :home_dir_base, '/srv/http'
+    set :device, '/dev/sdf'
+    set :mount_point, '/data'
   }
   after {
     definer.requires 'writable install location'

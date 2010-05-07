@@ -20,19 +20,22 @@ dep 'github alias' do
 end
 
 dep 'marketplace repo' do
-  requires 'passenger deploy repo', 'github alias'
+  requires 'passenger deploy repo', 'github alias', 'add remote and switch to tracking branch', 'git submodules up-to-date'
   setup {
     set :passenger_repo_root, '~/current'
+    set :repo, '~/current'
+    set :remote, 'origin'
+    set :branch, 'master'
+    set :remote_url, 'github:envato/marketplace.git'
   }
 end
 
 dep 'marketplace configured' do
-  requires 'marketplace repo', 'rails app db yaml present', 'git submodules up-to-date', 'marketplace gems', 'rails app'
+  requires 'marketplace repo', 'rails app db yaml present', 'marketplace gems', 'rails app'
   setup {
     set :username, 'app'
     set :nginx_prefix, '/opt/nginx'
     set :rails_root, '~/current'
-    set :repo, '~/current'
     set :rails_env, 'staging'
     set :db, 'mysql'
   }

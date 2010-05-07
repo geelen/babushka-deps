@@ -1,13 +1,14 @@
-gem 'right_aws' do
-  provides []
-end
+marketplace_gems = %w[right_aws hpricot json money cgi_multipart_eof_fix chronic paypal erubis flog flay metric_fu]
 
-gem 'hpricot' do
-  provides []
+marketplace_gems.each { |g| gem(g) { provides [] } }
+
+dep 'marketplace gems' do
+  #gems that aren't defined properly in environment.rb or a bundler file
+  requires marketplace_gems
 end
 
 dep 'marketplace configured' do
-  requires 'right_aws', 'hpricot', 'rails app'
+  requires 'marketplace gems', 'rails app'
   setup {
     set :username, 'app'
     set :nginx_prefix, '/opt/nginx'

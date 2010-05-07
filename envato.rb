@@ -1,19 +1,38 @@
+#gems that aren't defined properly in environment.rb or a bundler file
 marketplace_gems = %w[right_aws hpricot json money cgi_multipart_eof_fix chronic paypal erubis flog flay metric_fu]
 
 marketplace_gems.each { |g| gem(g) { provides [] } }
 
 dep 'marketplace gems' do
-  #gems that aren't defined properly in environment.rb or a bundler file
-  requires marketplace_gems
+  requires *marketplace_gems
+end
+
+dep 'github alias' do
+  requires 'SSH alias'
+  setup {
+    set :ssh_config_file, "~/.ssh/config"
+    set :hostname, "github.com"
+    set :alias, "github"
+    set :user, "git"
+    set :port, " "
+    set :key_file, "~/.ssh/github_key"
+  }
+end
+
+dep 'marketplace repo' do
+  requires 'passenger deploy repo', 'github alias'
+  setup {
+    set :passenger_repo_root, '~/current'
+  }
 end
 
 dep 'marketplace configured' do
-  requires 'marketplace gems', 'rails app'
+  requires 'marketplace repo', 'rails app db yaml present', 'git submodules up-to-date', 'marketplace gems', 'rails app'
   setup {
     set :username, 'app'
     set :nginx_prefix, '/opt/nginx'
-    set :passenger_repo_root, '~/current'
     set :rails_root, '~/current'
+    set :repo, '~/current'
     set :rails_env, 'staging'
     set :db, 'mysql'
   }
@@ -31,7 +50,7 @@ dep 'envato server configured' do
   }
   after {
     definer.requires 'writable install location'
-    log %Q{Ok, now run: su - app -c "babushka 'geelen user setup'"}
+    log_extra %Q{Ok, now run: su - app -c "babushka 'geelen user setup'"}
   }
 end
 

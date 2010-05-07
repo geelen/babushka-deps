@@ -7,7 +7,7 @@ gem 'hpricot' do
 end
 
 dep 'marketplace configured' do
-  requires 'right_aws', 'rails app'
+  requires 'right_aws', 'hpricot', 'rails app'
   setup {
     set :username, 'app'
     set :nginx_prefix, '/opt/nginx'

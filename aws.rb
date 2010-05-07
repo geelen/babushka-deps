@@ -19,7 +19,9 @@ dep 'EBS attached' do
   # follow along here http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1663
 end
 
-pkg 'xfsprogs', :on => :linux
+pkg 'xfsprogs', :on => :linux do
+  provides []
+end
 
 dep 'EBS volume mounted', :on => :linux do
   requires_when_unmet 'xfsprogs'

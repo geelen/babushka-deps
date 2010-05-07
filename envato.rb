@@ -20,7 +20,7 @@ dep 'marketplace configured' do
 end
 
 dep 'envato app user configured' do
-  requires 'switch babushka install to fork', 'system', 'user exists', 'envato user bootstrap'
+  requires 'switch babushka install to fork', 'system', 'user exists'
   setup {
     set :branch_name, 'master'
     set :fork_name, 'geelen'
@@ -29,12 +29,8 @@ dep 'envato app user configured' do
   }
   after {
     definer.requires 'writable install location'
+    log %Q{Ok, now run: su - app -c "babushka 'geelen user setup'}
   }
-end
-
-dep 'envato user bootstrap' do
-  met? { (var(:home_dir_base) / var(:username) / '.ssh/authorized_keys').exists? }
-  meet { shell %Q{su - app -c "babushka 'geelen user setup'"} }
 end
 
 dep 'geelen user setup' do

@@ -9,7 +9,7 @@ dep 'add remote and switch to tracking branch' do
     }
   }
   meet {
-    shell "mkdir -p '#{var(:repo)}'"
+    shell "mkdir -p #{var(:repo)}"
     in_dir(var(:repo)) {
       if shell("git branch")[/#{var(:branch)}/]
         #better than this, surely?

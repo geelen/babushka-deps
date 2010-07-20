@@ -1,1 +1,1 @@
-dep 'bash-completion', :template => 'managed'
+dep('bash-completion', :template => 'managed') { provides [] }

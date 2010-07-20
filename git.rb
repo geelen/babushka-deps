@@ -33,3 +33,15 @@ dep 'git submodules up-to-date' do
     }
   }
 end
+
+dep 'github alias' do
+  requires 'SSH alias'
+  setup {
+    set :ssh_config_file, "~/.ssh/config"
+    set :hostname, "github.com"
+    set :alias, "github"
+    set :user, "git"
+    set :port, " "
+    set :key_file, "~/.ssh/github_key"
+  }
+end

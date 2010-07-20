@@ -1,7 +1,7 @@
 #gems that aren't defined properly in environment.rb or a bundler file
 marketplace_gems = %w[right_aws hpricot json money cgi_multipart_eof_fix chronic paypal erubis flog flay metric_fu ruby-prof]
 
-marketplace_gems.each { |g| gem(g) { provides [] } }
+marketplace_gems.each { |g| dep("#{g}.gem") { provides [] } }
 
 dep 'marketplace gems' do
   requires *marketplace_gems
@@ -20,7 +20,7 @@ dep 'github alias' do
 end
 
 dep 'marketplace repo' do
-  requires 'passenger deploy repo', 'github alias', 'add remote and switch to tracking branch', 'git submodules up-to-date'
+  requires 'benhoskings:passenger deploy repo exists', 'add remote and switch to tracking branch', 'git submodules up-to-date'
   setup {
     set :passenger_repo_root, '~/current'
     set :repo, '~/current'

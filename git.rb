@@ -3,13 +3,12 @@ dep 'add remote and switch to tracking branch' do
   define_var :remote, :message => "Name of remote repo"
   define_var :branch, :message => "Branch to track"
   met? {
-    var(:repo).p.exists? && in_dir(var(:repo)) {
+    in_dir(var(:repo)) {
       current_branch = shell("git branch")[/^\*\W*(\w+)/, 1]
       current_branch == var(:branch)
     }
   }
   meet {
-    shell "mkdir -p #{var(:repo)}"
     in_dir(var(:repo)) {
       if shell("git branch")[/#{var(:branch)}/]
         #better than this, surely?

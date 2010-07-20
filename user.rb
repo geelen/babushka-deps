@@ -23,3 +23,11 @@ dep 'user set up from root', :on => :linux do
   setup { set :home_dir_base, "/home" }
   requires 'user exists with password', 'authorized key present for user'
 end
+
+dep 'user setup' do
+  requires 'benhoskings:user setup', 'bash-completion'
+  setup {
+    set :github_user, 'geelen'
+    set :dot_files_repo, 'dot-files'
+  }
+end

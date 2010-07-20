@@ -18,3 +18,8 @@ dep 'authorized key present for user' do
   meet { append_to_file var(:your_ssh_public_key), "#{ssh_dir}/authorized_keys", :sudo => true }
   after { sudo "chown -R #{var(:username)}:#{var(:username)} '#{ssh_dir}'; chmod 600 '#{ssh_dir}/authorized_keys'" }
 end
+
+dep 'user set up from root', :on => :linux do
+  setup { set :home_dir_base, "/home" }
+  requires 'user exists with password', 'authorized key present for user'
+end

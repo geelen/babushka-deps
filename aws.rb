@@ -8,9 +8,9 @@ dep 's3cmd configured', :for => :linux do
   meet { render_erb "s3cmd/.s3cfg.erb", :to => file }
 end
 
-pkg 's3cmd', :for => :linux
+dep 's3cmd.managed', :for => :linux
 
-pkg 'ec2-api-tools' do
+dep 'ec2-api-tools.managed' do
   provides 'ec2-run-instances', 'ec2-create-volume'
 end
 
@@ -19,7 +19,7 @@ dep 'EBS attached' do
   # follow along here http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1663
 end
 
-pkg 'xfsprogs', :on => :linux do
+dep 'xfsprogs.managed', :on => :linux do
   provides []
 end
 

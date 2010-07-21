@@ -16,7 +16,7 @@ dep 'add remote and switch to tracking branch' do
       end
       shell("git remote add #{var(:remote)} #{var(:remote_url)}")
       shell("git fetch #{var(:remote)}")
-      shell("git checkout #{var(:remote)}/#{var(:branch)} -b #{var(:branch)} -f")
+      shell("git checkout -f -b #{var(:branch)} #{var(:remote)}/#{var(:branch)}")
     }
   }
 end

@@ -5,3 +5,8 @@ dep 'rails app db yaml present' do
   met? { db_yaml.exists? }
   meet { shell "cp #{var(:rails_root) / "config" / "database.*#{var(:rails_env)}*"} #{db_yaml}" }
 end
+
+dep 'bundler installed and locked' do
+  met? { (var(:rails_root) / "Gemfile.lock").exists? }
+  meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
+end

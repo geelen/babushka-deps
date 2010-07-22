@@ -7,6 +7,11 @@ dep 'rails app db yaml present' do
 end
 
 dep 'bundler installed and locked' do
+  requires 'bundler.gem'
   met? { (var(:rails_root) / "Gemfile.lock").exists? }
   meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
+end
+
+dep 'bundler.gem' do
+  provides 'bundle'
 end

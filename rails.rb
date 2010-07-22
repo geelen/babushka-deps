@@ -23,5 +23,10 @@ end
 
 # less than ideal
 dep 'nokogiri deps installed' do
-  requires 'benhoskings:libxml.managed'
+  requires 'libxslt-dev.managed', 'benhoskings:libxml.managed'
+end
+
+dep 'libxslt-dev.managed' do
+  installs { via :apt, 'libxslt1-dev' }
+  provides []
 end

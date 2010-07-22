@@ -8,7 +8,7 @@ end
 
 dep 'bundler installed and locked' do
   requires 'bundler.gem'
-  met? { (var(:rails_root) / "Gemfile.lock").exists? }
+  met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
   meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
 end
 

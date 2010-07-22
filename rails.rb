@@ -7,7 +7,7 @@ dep 'rails app db yaml present' do
 end
 
 dep 'bundler installed and locked' do
-  requires 'bundler.gem', 'local gemdir writable'
+  requires 'bundler.gem', 'local gemdir writable', 'nokogiri deps installed'
   met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
   meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
 end
@@ -20,3 +20,10 @@ dep 'local gemdir writable' do
   met? { File.writable_real?("~/.gem".p) }
   meet { sudo "chown #{var(:username)} #{"~/.gem".p}"}
 end
+
+# less than ideal
+dep 'nokogiri deps installed' do
+  requires 'libxslt-dev.managed', 'benhoskings:libxml2.managed'
+end
+
+dep 'libxslt-dev.managed'

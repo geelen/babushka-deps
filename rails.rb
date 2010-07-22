@@ -31,5 +31,5 @@ dep 'rails app' do
 end
 
 dep 'db set up' do
-  requires 'benhoskings:deployed app', 'benhoskings:existing db', 'benhoskings:rails.gem'
+  requires 'benhoskings:deployed app', 'existing db', 'benhoskings:rails.gem'
 end

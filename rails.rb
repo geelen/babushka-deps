@@ -26,4 +26,6 @@ dep 'nokogiri deps installed' do
   requires 'libxslt-dev.managed', 'benhoskings:libxml2.managed'
 end
 
-dep 'libxslt-dev.managed'
+dep 'libxslt-dev.managed' do
+  provides []
+end

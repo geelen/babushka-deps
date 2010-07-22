@@ -7,7 +7,7 @@ dep 'rails app db yaml present' do
 end
 
 dep 'bundler installed and locked' do
-  requires 'bundler.gem', 'local gemdir writable', 'nokogiri deps installed'
+  requires 'bundler.gem', 'local gemdir writable',
   met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
   meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
 end
@@ -21,12 +21,15 @@ dep 'local gemdir writable' do
   meet { sudo "chown #{var(:username)} #{"~/.gem".p}"}
 end
 
-# less than ideal
-dep 'nokogiri deps installed' do
-  requires 'libxslt-dev.managed', 'benhoskings:libxml.managed'
+dep 'rails app' do
+  requires 'benhoskings:webapp', 'benhoskings:passenger deploy repo', 'bundler installed and locked', 'db set up'
+  define_var :rails_env, :default => 'production'
+  define_var :rails_root, :default => '~/current', :type => :path
+  setup {
+    set :vhost_type, 'passenger'
+  }
 end
 
-dep 'libxslt-dev.managed' do
-  installs { via :apt, 'libxslt1-dev' }
-  provides []
+dep 'db set up' do
+  requires 'benhoskings:deployed app', 'benhoskings:existing db', 'benhoskings:db gem', 'benhoskings:rails.gem'
 end

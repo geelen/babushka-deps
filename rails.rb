@@ -23,5 +23,5 @@ end
 
 # less than ideal
 dep 'nokogiri deps installed' do
-  requires 'benhoskings:libxml2.managed'
+  requires 'benhoskings:libxml.managed'
 end

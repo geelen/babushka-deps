@@ -7,11 +7,16 @@ dep 'rails app db yaml present' do
 end
 
 dep 'bundler installed and locked' do
-  requires 'bundler.gem'
+  requires 'bundler.gem', 'local gemdir writable'
   met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
   meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
 end
 
 dep 'bundler.gem' do
   provides 'bundle'
+end
+
+dep 'local gemdir writable' do
+  met? { File.writable_real?("~/.gem".p) }
+  meet { sudo "chown #{var(:username)} #{"~/.gem".p}"}
 end

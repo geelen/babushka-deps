@@ -22,7 +22,7 @@ dep 'local gemdir writable' do
 end
 
 dep 'rails app' do
-  requires 'benhoskings:webapp', 'benhoskings:passenger deploy repo', 'bundler installed and locked', 'db set up'
+  requires 'benhoskings:webapp', 'benhoskings:passenger deploy repo', 'benhoskings:db gem', 'bundler installed and locked', 'db set up'
   define_var :rails_env, :default => 'production'
   define_var :rails_root, :default => '~/current', :type => :path
   setup {
@@ -31,5 +31,5 @@ dep 'rails app' do
 end
 
 dep 'db set up' do
-  requires 'benhoskings:deployed app', 'benhoskings:existing db', 'benhoskings:db gem', 'benhoskings:rails.gem'
+  requires 'benhoskings:deployed app', 'benhoskings:existing db', 'benhoskings:rails.gem'
 end

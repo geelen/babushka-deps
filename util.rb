@@ -2,7 +2,7 @@ dep 'monit', :template => 'managed'
 
 dep 'monit running' do
   requires 'monit', 'monit startable'
-  met? { !sudo "monit status" }
+  met? { (sudo "monit status")[/uptime/] }
   meet { sudo "/etc/init.d/monit start" }
 end
 

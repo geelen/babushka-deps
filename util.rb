@@ -11,6 +11,7 @@ dep 'monitrc configured' do
   define_var :monit_port, :default => 9111
   met? { babushka_config? "/etc/monit/monitrc" }
   meet { render_erb "monit/monitrc.erb", :to => "/etc/monit/monitrc" }
+  after { sudo "chmod 700 /etc/monit/monitrc" }
 end
 
 dep 'monit startable' do

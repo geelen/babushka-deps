@@ -1,19 +1,9 @@
 dep 'monit', :template => 'managed'
 
 dep 'monit running' do
-  requires 'monit', 'monit configured for startup'
+  requires 'monit', 'monit startable'
   met? { !sudo "monit status" }
-end
-
-dep 'monit configured for startup' do
-  requires 'monit config is where we expect'
-  met? { grep "startup=1", "/etc/default/monit" }
-  meet { change_line "startup=0", "startup=1", "/etc/default/monit" }
-end
-
-dep 'monit config is where we expect' do
-  met? { "/etc/default/monit".p.exists? }
-  meet { sudo "echo startup=0 >> /etc/default/monit" }
+  meet { sudo "/etc/init.d/monit start" }
 end
 
 dep 'monitrc configured' do
@@ -23,6 +13,13 @@ dep 'monitrc configured' do
   meet { render_erb "monit/monitrc.erb", :to => "/etc/monit/monitrc" }
 end
 
-dep 'monit configured' do
+dep 'monit startable' do
+  requires 'monitrc configured', 'monit config is where we expect'
+  met? { grep "startup=1", "/etc/default/monit" }
+  meet { change_line "startup=0", "startup=1", "/etc/default/monit" }
+end
 
+dep 'monit config is where we expect' do
+  met? { "/etc/default/monit".p.exists? }
+  meet { sudo "echo startup=0 >> /etc/default/monit" }
 end

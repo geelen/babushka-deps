@@ -13,6 +13,7 @@ end
 
 dep 'monit config is where we expect' do
   met? { "/etc/default/monit".p.exists? }
+  meet { sudo "echo startup=0 >> /etc/default/monit" }
 end
 
 dep 'monitrc configured'

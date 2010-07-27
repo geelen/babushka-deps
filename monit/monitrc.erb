@@ -6,4 +6,4 @@ set logfile syslog facility log_daemon
 set httpd port <%= var(:monit_port) %>
     allow localhost
 
-include /etc/monit/conf.d/*.monitrc
+include /etc/monit/conf.d/

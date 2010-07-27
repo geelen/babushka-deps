@@ -1,5 +1,5 @@
 dep 'running as root' do
-  met? { shell "whomai" == 'root' }
+  met? { shell("whomai") == 'root' }
 end
 
 dep 'monit', :template => 'managed'

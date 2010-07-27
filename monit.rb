@@ -1,7 +1,3 @@
-dep 'running as root' do
-  met? { shell("whoami") == 'root' }
-end
-
 dep 'monit', :template => 'managed'
 
 dep 'monit running' do

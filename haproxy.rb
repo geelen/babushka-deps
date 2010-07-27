@@ -1,7 +1,7 @@
 dep 'haproxy', :template => 'managed'
 
 dep 'haproxy running' do
-  requires 'haproxy configured'
+  requires 'haproxy configured', 'haproxy startable'
   met? do
     "/var/run/haproxy.pid".p.exist? &&
     shell("ps `cat /var/run/haproxy.pid`")
@@ -23,4 +23,10 @@ dep 'haproxy configured' do
   helper(:config_file) { "/etc/haproxy/haproxy.cfg" }
   met? { babushka_config? config_file }
   meet { render_erb "haproxy/haproxy.cfg.erb", :to => config_file }
+end
+
+dep 'haproxy startable' do
+  requires 'running as root'
+  met? { grep "ENABLED=1", "/etc/default/haproxy" }
+  meet { change_line "ENABLED=0", "ENABLED=1", "/etc/default/haproxy" }
 end

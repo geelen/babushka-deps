@@ -4,7 +4,7 @@ dep 'haproxy running' do
   requires 'haproxy configured'
   met? do
     "/var/run/haproxy.pid".p.exist? &&
-    shell "ps `cat /var/run/haproxy.pid`"
+    shell("ps `cat /var/run/haproxy.pid`")
   end
   meet { sudo "/etc/init.d/haproxy start" }
 end

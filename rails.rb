@@ -31,7 +31,7 @@ dep 'rails app' do
 end
 
 dep 'db set up' do
-  requires 'benhoskings:deployed app', 'existing db', 'benhoskings:rails.gem'
+  requires 'benhoskings:deployed app', 'existing db'
   setup {
     if (db_config = yaml(var(:rails_root) / 'config/database.yml')[var(:rails_env)]).nil?
       log_error "There's no database.yml entry for the #{var(:rails_env)} environment."

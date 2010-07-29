@@ -3,9 +3,9 @@
 <% (1..var(:number_of_upstream_mongrels).to_i).each do |mongrel_index| %>
   <% port_number = var(:mongrel_port_range).gsub('x', mongrel_index.to_s) %>
 check process mongrel_<%= var(:app_name) %>_<%= port_number %>
-  <% pidfile = "/var/run/mongrel.#{var(:app_name)}.#{port_number}.pid" %>
+  <% pidfile = "#{piddir}/mongrel.#{port_number}.pid" %>
   with pidfile <%= pidfile %>
-  start program = "/usr/bin/mongrel_rails start -e <%= var(:rails_env) %> -d -c <%= var(:rails_root) %> -P <%= pidfile %> -p <%= port_number %> --user <%= var(:user) %>"
+  start program = "/usr/bin/mongrel_rails start -e <%= var(:rails_env) %> -d -c <%= var(:rails_root) %> -P <%= pidfile %> -p <%= port_number %> --user <%= var(:username) %> --group <%= var(:username) %>"
   stop program = "/usr/bin/mongrel_rails stop -P <%= pidfile %>"
   if totalmem is greater than 290 MB for 2 cycles then restart      # eating up memory?
   group mongrel_<%= var(:app_name) %>

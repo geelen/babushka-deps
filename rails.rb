@@ -8,8 +8,8 @@ end
 
 dep 'bundler installed and locked' do
   requires 'bundler.gem', 'local gemdir writable'
-  met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
-  meet { in_dir(var(:rails_root)) { shell "bundle install" }}
+  met? { in_dir(var(:rails_root)) { shell "bundle check", :log => true } }
+  meet { in_dir(var(:rails_root)) { shell "bundle install --without test,cucumber", :log => true }}
 end
 
 dep 'bundler.gem' do

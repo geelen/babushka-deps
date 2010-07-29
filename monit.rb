@@ -30,7 +30,7 @@ dep 'monit config is where we expect' do
 end
 
 dep 'monit mongrel configured' do
-  requires 'running as root', 'monit running'
+  requires 'running as root', 'monit startable', 'monit running'
   helper(:monitrc) { "/etc/monit/conf.d/mongrel.#{var(:app_name)}.monitrc" }
   met? { babushka_config? monitrc }
   meet { render_erb "monit/mongrels.monitrc.erb", :to => monitrc }

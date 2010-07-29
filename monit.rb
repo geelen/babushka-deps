@@ -8,7 +8,7 @@ dep 'monit running' do
 end
 
 dep 'monit startable' do
-  requires 'running as root', 'monitrc configured', 'monit config is where we expect'
+  requires 'monitrc configured', 'monit config is where we expect'
   met? { sudo "grep 'startup=1' /etc/default/monit" }
   meet { sudo "sed -i s/startup=0/startup=1/ /etc/default/monit" }
 end

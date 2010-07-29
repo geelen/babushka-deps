@@ -44,3 +44,13 @@ end
 dep 'webapp' do
   requires 'benhoskings:user exists', 'benhoskings:vhost enabled.nginx', 'benhoskings:webserver running.nginx'
 end
+
+dep 'nokogiri.gem' do
+  requires 'libxslt-dev.managed', 'benhoskings:libxml.managed'
+  provides []
+end
+
+dep 'libxslt-dev.managed' do
+  installs { via :apt, 'libxslt1-dev' }
+  provides []
+end

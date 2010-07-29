@@ -17,6 +17,7 @@ dep 'monitrc configured' do
   requires 'running as root'
   define_var :monit_frequency, :default => 30
   define_var :monit_port, :default => 9111
+  define_var :monit_included_dir, :default => '/etc/monit/conf.d/'
   met? { babushka_config? "/etc/monit/monitrc" }
   meet { render_erb "monit/monitrc.erb", :to => "/etc/monit/monitrc" }
   after { shell "chmod 700 /etc/monit/monitrc" }

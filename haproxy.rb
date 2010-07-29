@@ -22,7 +22,7 @@ dep 'haproxy configured' do
 
   helper(:config_file) { "/etc/haproxy/haproxy.cfg" }
   met? { babushka_config? config_file }
-  meet { render_erb "haproxy/haproxy.cfg.erb", :to => config_file }
+  meet { render_erb "haproxy/haproxy.cfg.erb", :to => config_file, :sudo => true }
 end
 
 dep 'haproxy startable' do

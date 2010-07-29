@@ -27,5 +27,5 @@ end
 
 dep 'haproxy startable' do
   met? { sudo "grep 'ENABLED=1' /etc/default/haproxy" }
-  meet { sudo "sed s/ENABLED=0/ENABLED=1/ /etc/default/haproxy" }
+  meet { sudo "sed -i s/ENABLED=0/ENABLED=1/ /etc/default/haproxy" }
 end

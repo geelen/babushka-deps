@@ -28,3 +28,11 @@ dep 'monit config is where we expect' do
   met? { "/etc/default/monit".p.exists? }
   meet { shell "echo startup=0 >> /etc/default/monit" }
 end
+
+dep 'monit mongrel configured' do
+  requires 'running as root', 'monit running'
+  helper(:monitrc) { "/etc/monit/conf.d/mongrel.#{var(:app_name)}.monitrc" }
+  met? { babushka_config? monitrc }
+  meet { render_erb "monit/mongrels.monitrc.erb", :to => monitrc }
+  after { shell "monit reload" }
+end

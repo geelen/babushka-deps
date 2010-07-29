@@ -1,3 +1,5 @@
+# <%= generated_by_babushka %>
+
 check process memcache_<%= var(:memcached_port) %>
   with pidfile /var/run/memcached_<%= var(:memcached_port) %>.pid
   start program = "/etc/init.d/memcached restart"

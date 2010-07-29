@@ -9,7 +9,7 @@ end
 dep 'bundler installed and locked' do
   requires 'bundler.gem', 'local gemdir writable'
   met? { (var(:rails_root) / "Gemfile.lock").exists? && in_dir(var(:rails_root)) { shell "bundle check" } }
-  meet { in_dir(var(:rails_root)) { shell "bundle install --relock" }}
+  meet { in_dir(var(:rails_root)) { shell "bundle install" }}
 end
 
 dep 'bundler.gem' do

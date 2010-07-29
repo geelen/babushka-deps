@@ -26,7 +26,6 @@ dep 'haproxy configured' do
 end
 
 dep 'haproxy startable' do
-  requires 'running as root'
-  met? { grep "ENABLED=1", "/etc/default/haproxy" }
-  meet { change_line "ENABLED=0", "ENABLED=1", "/etc/default/haproxy" }
+  met? { sudo "grep 'ENABLED=1' /etc/default/haproxy" }
+  meet { sudo "sed s/ENABLED=0/ENABLED=1/ /etc/default/haproxy" }
 end

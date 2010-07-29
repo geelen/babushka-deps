@@ -31,7 +31,3 @@ dep 'user setup' do
     set :dot_files_repo, 'dot-files'
   }
 end
-
-dep 'running as root' do
-  met? { shell("whoami") == 'root' }
-end

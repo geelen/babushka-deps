@@ -38,5 +38,8 @@ end
 dep 'writable monit pid directory' do
   helper(:piddir) { "/var/run/mongrel.#{var(:app_name)}".p }
   met? { piddir.writable_real? }
-  meet { sudo "mkdir -p #{piddir} && chown #{var(:username)}:#{var(:username)} #{piddir}"}
+  meet {
+    sudo "mkdir -p #{piddir}"
+    sudo "chown #{var(:username)}:#{var(:username)} #{piddir}"
+  }
 end

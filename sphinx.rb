@@ -4,14 +4,14 @@ dep 'sphinx.src' do
 end
 
 dep 'sphinx running' do
-  requires 'sphinx.src', 'sphinx configured', 'sphinx monit configured'
+  requires 'sphinx.src', 'sphinx configured'
   helper(:sphinx_pid) { "/var/run " / var(:app_name) / "sphinx.pid" }
   met? { sphinx_pid.exist? && shell("ps `cat #{sphinx_pid}`") }
-  meet { sudo "monit restart sphinx_#{var(:app_name)}" }
+  meet { sudo "monit restart sphinx_#{var(:app_name)} && sleep 2" }
 end
 
 dep 'sphinx configured' do
-  requires 'sphinx directory setup', 'sphinx yml generated', 'sphinx indexed'
+  requires 'sphinx directory setup', 'sphinx yml generated', 'sphinx indexed', 'sphinx monit configured'
   define_var :ts_generated_config, :default =>  L{  File.expand_path(var(:rails_root)) / 'config/thinkingsphinx/production.sphinx.conf' }
 end
 

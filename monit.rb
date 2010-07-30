@@ -35,8 +35,8 @@ dep 'monit mongrels configured' do
   after { sudo "monit reload" }
 end
 
-dep 'writable monit pid directory' do
-  helper(:piddir) { "/var/run/mongrel.#{var(:app_name)}".p }
+dep 'writable app pid directory' do
+  helper(:piddir) { "/var/run/#{var(:app_name)}".p }
   met? { piddir.writable_real? }
   meet {
     sudo "mkdir -p #{piddir}"

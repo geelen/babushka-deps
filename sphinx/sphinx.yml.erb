@@ -1,0 +1,12 @@
+# <%= generated_by_babushka %>
+---
+production:
+  address: <%= var(:util_host) %>
+  searchd_log_file: /var/log/sphinx.searchd.log
+  query_log_file: /var/log/sphinx.query.log
+  pid_file: /var/run/<%= var(:app_name) %>/sphinx.pid
+  port: <%= var(:sphinx_port) %>
+  mem_limit: <%= var(:sphinx_mem_limit) %>
+  config_file: /data/flashden/current/config/thinkingsphinx/production.sphinx.conf
+  sql_host: <%= var(:db_host) %>
+  searchd_file_path: <%= var(:sphinx_dir) %>/indexes

@@ -11,9 +11,21 @@ dep 'sphinx running' do
 end
 
 dep 'sphinx configured' do
+  requires 'sphinx directory setup'
+  define_var :sphinx_port, :default => 3312
+  define_var :sphinx_mem_limit, :default => '384M'
   helper(:sphinx_config) { var(:rails_root) / 'config' / 'sphinx.yml' }
-  met? { sphinx_config.exists? }
-  meet { "shell cp #{var(:rails_root) / "config" / "sphinx.#{var(:rails_env)}.yml"} #{sphinx_config}" }
+  met? { babushka_config? sphinx_config }
+  meet { render_erb = 'sphinx/sphinx.yml.erb', :to => sphinx_config }
+end
+
+dep 'sphinx directory setup' do
+  define_var :sphinx_dir, :default => '/var/sphinx'
+  met? { (var(:sphinx_dir) / 'indexes').exists? && var(:sphinx_dir).p.writable_real? }
+  meet {
+    sudo "mkdir -p #{var(:sphinx_dir) / 'indexes'}"
+    sudo("chown -R #{var(:username)}:#{var(:username)} #{var(:sphinx_dir)}")
+  }
 end
 
 dep 'sphinx monit configured' do

@@ -48,8 +48,8 @@ end
 
 dep 'tracking branch up-to-date' do
   requires 'add remote and switch to tracking branch'
-  before { in_dir(var(:repo)) { shell "git fetch #{var(:remote)}" }}
   met? { in_dir(var(:repo)) {
+    shell "git fetch #{var(:remote)}"
     shell("cat .git/refs/heads/#{var(:branch)}") == shell("cat .git/refs/remotes/#{var(:remote)}/#{var(:branch)}")
   } }
   meet { in_dir(var(:repo)) { shell "git merge --ff-only #{var(:remote)}/#{var(:branch)}" } }

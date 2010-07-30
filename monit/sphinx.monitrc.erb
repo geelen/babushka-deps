@@ -3,6 +3,6 @@
 check process sphinx_<%= var(:app_name) %>
   with pidfile /var/run/<%= var(:app_name) %>/sphinx.pid
 # alert crigor@engineyard.com #ticket 3313
-  start program = "su -c <%= var(:username) %> '/usr/local/bin/searchd --config <%= var(:ts_generated_config) %>'"
-  stop program = "su -c <%= var(:username) %> '/usr/local/bin/searchd --stop --config <%= var(:ts_generated_config) %>'"
+  start program = "/bin/su <%= var(:username) %> -c '/usr/local/bin/searchd --config <%= var(:ts_generated_config) %>'"
+  stop program = "/bin/su <%= var(:username) %> -c '/usr/local/bin/searchd --stop --config <%= var(:ts_generated_config) %>'"
   group util_<%= var(:app_name) %>

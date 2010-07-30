@@ -3,6 +3,6 @@
 check process sphinx_<%= var(:app_name) %>
   with pidfile /var/run/<%= var(:app_name) %>/sphinx.pid
 # alert crigor@engineyard.com #ticket 3313
-  start program = "rake -f <%= File.expand_path(var(:rails_root)) %>/Rakefile RAILS_ENV=<%= var(:rails_env) %> thinking_sphinx:start" as uid <%= var(:username) %> and gid <%= var(:username) %>
-  stop program = "rake -f <%= File.expand_path(var(:rails_root)) %>/Rakefile RAILS_ENV=<%= var(:rails_env) %> thinking_sphinx:stop" as uid <%= var(:username) %> and gid <%= var(:username) %>
+  start program = "/usr/bin/rake -f <%= File.expand_path(var(:rails_root)) %>/Rakefile RAILS_ENV=<%= var(:rails_env) %> thinking_sphinx:start" as uid <%= var(:username) %> and gid <%= var(:username) %>
+  stop program = "/usr/bin/rake -f <%= File.expand_path(var(:rails_root)) %>/Rakefile RAILS_ENV=<%= var(:rails_env) %> thinking_sphinx:stop" as uid <%= var(:username) %> and gid <%= var(:username) %>
   group util_<%= var(:app_name) %>

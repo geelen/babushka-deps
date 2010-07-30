@@ -16,7 +16,7 @@ dep 'sphinx configured' do
   define_var :sphinx_mem_limit, :default => '384M'
   helper(:sphinx_config) { var(:rails_root) / 'config' / 'sphinx.yml' }
   met? { babushka_config? sphinx_config }
-  meet { render_erb = 'sphinx/sphinx.yml.erb', :to => sphinx_config }
+  meet { render_erb 'sphinx/sphinx.yml.erb', :to => sphinx_config }
 end
 
 dep 'sphinx directory setup' do

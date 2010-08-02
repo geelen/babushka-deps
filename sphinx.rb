@@ -5,9 +5,10 @@ end
 
 dep 'sphinx running' do
   requires 'sphinx.src', 'sphinx configured'
-  helper(:sphinx_pid) { "/var/run " / var(:app_name) / "sphinx.pid" }
-  met? { sphinx_pid.exist? && shell("ps `cat #{sphinx_pid}`") }
-  meet { sudo "monit restart sphinx_#{var(:app_name)} && sleep 2" }
+  # Not sure how best to assert this, since monit takes a little time to start sphinx
+#  helper(:sphinx_pid) { "/var/run " / var(:app_name) / "sphinx.pid" }
+#  met? { sphinx_pid.exist? && shell("ps `cat #{sphinx_pid}`") }
+#  meet { sudo "monit restart sphinx_#{var(:app_name)} && sleep 2" }
 end
 
 dep 'sphinx configured' do

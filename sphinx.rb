@@ -26,7 +26,7 @@ dep 'sphinx directory setup' do
 end
 
 dep 'sphinx yml in place' do
-  requires 'production database config generated'
+  requires 'sphinx yml generated'
   helper(:sphinx_config_within_app) { var(:rails_root) / 'config' / 'sphinx.yml' }
   met? { sphinx_config_within_app.exists? }
   met? { shell "ln -sf #{var(:data_dir) / 'shared/config/sphinx.yml'} #{sphinx_config_within_app}" }

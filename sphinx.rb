@@ -13,15 +13,7 @@ end
 
 dep 'sphinx configured' do
   requires 'sphinx directory setup', 'sphinx yml generated', 'sphinx indexed', 'sphinx monit configured'
-  define_var :ts_generated_config, :default =>  L{  File.expand_path(var(:rails_root)) / 'config/thinkingsphinx/production.sphinx.conf' }
-end
-
-dep 'sphinx yml generated' do
-  define_var :sphinx_port, :default => 3312
-  define_var :sphinx_mem_limit, :default => '384M'
-  helper(:sphinx_config) { var(:rails_root) / 'config' / 'sphinx.yml' }
-  met? { babushka_config? sphinx_config }
-  meet { render_erb 'sphinx/sphinx.yml.erb', :to => sphinx_config }
+  define_var :ts_generated_config, :default =>  L{  File.expand_path(var(:data_dir)) / 'shared/config/thinkingsphinx/production.sphinx.conf' }
 end
 
 dep 'sphinx directory setup' do
@@ -31,6 +23,21 @@ dep 'sphinx directory setup' do
     sudo "mkdir -p #{var(:sphinx_dir) / 'indexes'}"
     sudo("chown -R #{var(:username)}:#{var(:username)} #{var(:sphinx_dir)}")
   }
+end
+
+dep 'sphinx yml in place' do
+  requires 'production database config generated'
+  helper(:sphinx_config_within_app) { var(:rails_root) / 'config' / 'sphinx.yml' }
+  met? { sphinx_config_within_app.exists? }
+  met? { shell "ln -sf #{var(:data_dir) / 'shared/config/sphinx.yml'} #{sphinx_config_within_app}" }
+end
+
+dep 'sphinx yml generated' do
+  define_var :sphinx_port, :default => 3312
+  define_var :sphinx_mem_limit, :default => '384M'
+  helper(:sphinx_config) { var(:data_dir) / 'shared/config/sphinx.yml' }
+  met? { babushka_config? sphinx_config }
+  meet { render_erb 'sphinx/sphinx.yml.erb', :to => sphinx_config }
 end
 
 dep 'sphinx indexed' do

@@ -12,7 +12,7 @@ dep 'sphinx running' do
 end
 
 dep 'sphinx configured' do
-  requires 'sphinx directory setup', 'sphinx yml generated', 'sphinx indexed', 'sphinx monit configured'
+  requires 'sphinx directory setup', 'sphinx yml in place', 'sphinx indexed', 'sphinx monit configured'
   define_var :ts_generated_config, :default =>  L{  File.expand_path(var(:data_dir)) / 'shared/config/thinkingsphinx/production.sphinx.conf' }
 end
 

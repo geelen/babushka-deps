@@ -14,8 +14,8 @@ dep 'add remote and switch to tracking branch' do
         #better than this, surely?
         raise "Branch #{var(:branch)} already exists!"
       end
-      shell("git remote add #{var(:remote)} #{var(:remote_url)}", :log => true)
-      shell("git fetch #{var(:remote)}", :log => true)
+      shell("git remote add #{var(:remote)} #{var(:remote_url)}")
+      shell("git fetch #{var(:remote)}")
       shell("git checkout -f -b #{var(:branch)} #{var(:remote)}/#{var(:branch)}", :log => true)
     }
   }

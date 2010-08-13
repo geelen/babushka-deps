@@ -3,7 +3,7 @@
 <% (1..var(:number_of_upstream_mongrels).to_i).each do |mongrel_index| %>
   <% port_number = var(:mongrel_port_range).gsub('x', mongrel_index.to_s) %>
 check process mongrel_<%= var(:app_name) %>_<%= port_number %>
-  <% pidfile = "/var/run/mongrel.#{port_number}.pid" %>
+  <% pidfile = "/var/run/#{var(:app_name)}/mongrel.#{port_number}.pid" %>
   with pidfile <%= pidfile %>
   start program = "<%= var(:bin_path) %>/mongrel_rails start -e <%= var(:rails_env) %> -d -c <%= File.expand_path(var(:rails_root)) %> -P <%= pidfile %> -p <%= port_number %> --user <%= var(:username) %> --group <%= var(:username) %>"
   stop program = "<%= var(:bin_path) %>/mongrel_rails stop -P <%= pidfile %>"

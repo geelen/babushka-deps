@@ -5,8 +5,8 @@
 check process mongrel_<%= var(:app_name) %>_<%= port_number %>
   <% pidfile = "/var/run/#{var(:app_name)}/mongrel.#{port_number}.pid" %>
   with pidfile <%= pidfile %>
-  start program = "/usr/bin/mongrel_rails start -e <%= var(:rails_env) %> -d -c <%= File.expand_path(var(:rails_root)) %> -P <%= pidfile %> -p <%= port_number %> --user <%= var(:username) %> --group <%= var(:username) %>"
-  stop program = "/usr/bin/mongrel_rails stop -P <%= pidfile %>"
+  start program = "<%= var(:bin_path) %>/mongrel_rails start -e <%= var(:rails_env) %> -d -c <%= File.expand_path(var(:rails_root)) %> -P <%= pidfile %> -p <%= port_number %> --user <%= var(:username) %> --group <%= var(:username) %>"
+  stop program = "<%= var(:bin_path) %>/mongrel_rails stop -P <%= pidfile %>"
   if totalmem is greater than 290 MB for 2 cycles then restart      # eating up memory?
   group mongrel_<%= var(:app_name) %>
 <% end %>

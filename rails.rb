@@ -11,7 +11,7 @@ dep 'bundler installed and locked' do
 end
 
 dep 'bundler.gem' do
-  installs 'bundler' => '~> 1.0.0.rc.1'
+  installs 'bundler' => '1.0.0.rc.5'
   provides 'bundle'
 end
 

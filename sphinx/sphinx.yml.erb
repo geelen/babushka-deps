@@ -2,9 +2,9 @@
 ---
 production:
   address: <%= var(:util_host) %>
-  searchd_log_file: /var/log/<%= var(:app_name) %>/sphinx.searchd.log
-  query_log_file: /var/log/<%= var(:app_name) %>/sphinx.query.log
-  pid_file: /var/run/<%= var(:app_name) %>/sphinx.pid
+  searchd_log_file: <%= var(:app_log_dir) %>/sphinx.searchd.log
+  query_log_file: <%= var(:app_log_dir) %>/sphinx.query.log
+  pid_file: <%= var(:app_pid_dir) %>/sphinx.pid
   port: <%= var(:sphinx_port) %>
   mem_limit: <%= var(:sphinx_mem_limit) %>
   config_file: <%= var(:ts_generated_config) %>

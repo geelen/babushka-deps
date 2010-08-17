@@ -2,9 +2,10 @@ dep 'haproxy', :template => 'managed'
 
 dep 'haproxy running' do
   requires 'haproxy configured', 'haproxy startable'
+  helper(:haproxy_pid) { var(:app_pid_dir) / "haproxy.pid" }
   met? do
-    "/var/run/haproxy.pid".p.exist? &&
-    shell("ps `cat /var/run/haproxy.pid`")
+    haproxy_pid.exist? &&
+    shell("ps `cat #{haproxy_pid}`")
   end
   meet { sudo "/etc/init.d/haproxy start" }
 end

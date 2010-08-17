@@ -28,10 +28,10 @@ dep 'monit config is where we expect' do
 end
 
 dep 'writable app pid directory' do
-  helper(:piddir) { "/var/run/#{var(:app_name)}".p }
-  met? { piddir.writable_real? }
+  met? { app_pid_dir.writable_real? }
   meet {
-    sudo "mkdir -p #{piddir}"
-    sudo "chown #{var(:username)}:#{var(:username)} #{piddir}"
+    log_error "This really should be created by /etc/rc.local"
+    sudo "mkdir -p #{app_pid_dir}"
+    sudo "chown #{var(:username)}:#{var(:username)} #{app_pid_dir}"
   }
 end

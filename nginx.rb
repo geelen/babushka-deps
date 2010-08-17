@@ -1,5 +1,5 @@
 dep 'webapp' do
-  requires 'benhoskings:user exists', 'webserver capable of starting', 'benhoskings:vhost enabled.nginx',
+  requires 'benhoskings:user exists', 'webserver capable of starting', 'benhoskings:vhost enabled.nginx'
 end
 
 dep 'webserver capable of starting' do

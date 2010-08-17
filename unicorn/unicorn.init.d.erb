@@ -8,15 +8,12 @@ set -e
 # since nginx and unicorn accept the same signals
 
 # Feel free to change any of the following variables for your app:
-TIMEOUT=${TIMEOUT-60}
-APP_ROOT=/home/x/my_app/current
-PID=$APP_ROOT/tmp/pids/unicorn.pid
-CMD="/usr/bin/unicorn -D -c $APPs_ROOT/config/unicorn.rb"
-INIT_CONF=$APP_ROOT/config/init.conf
+TIMEOUT=60
+APP_ROOT=<%= var :absolute_rails_root %>
+PID=<%= var :app_pid_dir %>/unicorn.pid
+CMD="<%= var :bin_path %>/unicorn -D -c <% var :unicorn_config_within_app %>"
 action="$1"
 set -u
-
-test -f "$INIT_CONF" && . $INIT_CONF
 
 old_pid="$PID.oldbin"
 

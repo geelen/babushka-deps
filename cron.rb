@@ -1,6 +1,6 @@
 meta :crontab do
   accepts_list_for :user
-  accepts_list_for :lines
+  accepts_list_for :lines_to_add
   template {
     helper(:crontab) { "/var/spool/cron/crontabs" / user.first }
     met? { lines_to_add.all? { |line| sudo("grep '#{line.to_s.chomp.strip}' #{rc_file}") } }

@@ -19,6 +19,6 @@ dep 'memcached monit configured' do
   meet { render_erb "monit/memcached.monitrc.erb", :to => monitrc, :sudo => true }
   after {
     sudo "monit reload"
-    sudo "monit restart -g memcached"
+    sudo "monit restart all -g memcached"
   }
 end

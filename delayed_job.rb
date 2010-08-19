@@ -9,7 +9,7 @@ dep 'delayed job monit configured' do
   meet { render_erb "monit/dj.monitrc.erb", :to => monitrc, :sudo => true }
   after {
     sudo "monit reload"
-    sudo "monit restart -g dj_#{var(:app_name)}"
+    sudo "monit restart all -g dj_#{var(:app_name)}"
   }
 end
 

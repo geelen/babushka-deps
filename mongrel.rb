@@ -9,6 +9,6 @@ dep 'monit mongrels configured' do
   meet { render_erb "monit/mongrels.monitrc.erb", :to => monitrc, :sudo => true }
   after {
     sudo "monit reload"
-    sudo "monit restart -g mongrel_#{var(:app_name)}"
+    sudo "monit restart all -g mongrel_#{var(:app_name)}"
   }
 end

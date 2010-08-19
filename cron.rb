@@ -1,4 +1,4 @@
-#meta :crontab do
+meta :crontab do
 #  accepts_list_for :user
 #  accepts_list_for :lines_to_add
 #  template {
@@ -8,4 +8,4 @@
 #    }
 #    meet { append_to_file lines_to_add.join("\n") + "\n\n", crontab, :sudo => !File.writable?(crontab) }
 #  }
-#end
+end

@@ -1,6 +1,6 @@
 meta :crontab do
-#  accepts_list_for :user
-#  accepts_list_for :lines_to_add
+  accepts_list_for :user
+  accepts_list_for :lines_to_add
 #  template {
 #    met? {
 #      existing_crontab = sudo "crontab -l", :as => user.first.to_s

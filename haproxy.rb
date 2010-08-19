@@ -4,7 +4,7 @@ dep 'haproxy running' do
   requires 'haproxy configured', 'haproxy startable'
   helper(:haproxy_pid) { "/var/run/haproxy.pid" }
   met? do
-    haproxy_pid.exist? &&
+    haproxy_pid.p.exist? &&
     shell("ps `cat #{haproxy_pid}`")
   end
   meet { sudo "/etc/init.d/haproxy start" }

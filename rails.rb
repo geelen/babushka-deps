@@ -4,7 +4,7 @@ dep 'rails app db yaml present' do
   meet { shell "cp #{var(:rails_root) / "config" / "database.*#{var(:rails_env)}*"} #{db_yaml}" }
 end
 
-dep 'bundler installed and locked' do
+dep 'bundler installed' do
   requires 'bundler.gem', 'local gemdir writable'
   met? { in_dir(var(:rails_root)) { shell "bundle check", :log => true } }
   meet { in_dir(var(:rails_root)) { sudo "bundle install --without test,cucumber", :log => true }}
@@ -21,7 +21,7 @@ dep 'local gemdir writable' do
 end
 
 dep 'rails app' do
-  requires 'webapp', 'benhoskings:passenger deploy repo', 'benhoskings:db gem', 'bundler installed and locked', 'db set up'
+  requires 'webapp', 'benhoskings:passenger deploy repo', 'benhoskings:db gem', 'bundler installed', 'db set up'
   define_var :rails_env, :default => 'production'
   define_var :rails_root, :default => '~/current', :type => :path
   setup {

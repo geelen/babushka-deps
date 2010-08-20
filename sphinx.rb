@@ -5,7 +5,7 @@ end
 
 dep 'sphinx configured' do
   requires 'sphinx.src', 'sphinx directory setup', 'sphinx yml in place', 'sphinx indexed', 'sphinx monit configured'
-  define_var :ts_generated_config, :default =>  L{  File.expand_path(var(:data_dir)) / 'shared/config/thinkingsphinx/production.sphinx.conf' }
+  define_var :ts_generated_config, :default =>  L{ File.expand_path(var(:data_dir)) / "shared/config/thinkingsphinx/#{var(:rails_env)}.sphinx.conf" }
 end
 
 dep 'sphinx directory setup' do
@@ -36,7 +36,7 @@ dep 'sphinx indexed' do
   met? { var(:ts_generated_config).p.exists? }
   meet {
     shell "mkdir -p #{File.dirname(var(:ts_generated_config))}"
-    in_dir(var(:rails_root)) { shell "rake RAILS_ENV=production thinking_sphinx:index", :log => true }
+    in_dir(var(:rails_root)) { shell "rake RAILS_ENV=#{var :rails_env} thinking_sphinx:index", :log => true }
   }
 end
 

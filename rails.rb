@@ -16,11 +16,11 @@ dep 'bundler.gem' do
 end
 
 dep 'local gemdir writable' do
-  hepler(:local_path) { "~/.gem".p }
+  helper(:local_path) { "~/.gem".p }
   met? { File.writable_real?(local_path) }
   meet {
     sudo "mkdir -p #{local_path}"
-    sudo "chown #{var(:username)}:#{var(:username)} #{local_path}" 
+    sudo "chown #{var(:username)}:#{var(:username)} #{local_path}"
   }
 end
 

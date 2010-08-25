@@ -16,8 +16,12 @@ dep 'bundler.gem' do
 end
 
 dep 'local gemdir writable' do
-  met? { File.writable_real?("~/.gem".p) }
-  meet { sudo "chown #{var(:username)} #{"~/.gem".p}"}
+  hepler(:local_path) { "~/.gem".p }
+  met? { File.writable_real?(local_path) }
+  meet {
+    sudo "mkdir -p #{local_path}"
+    sudo "chown #{var(:username)}:#{var(:username)} #{local_path}" 
+  }
 end
 
 dep 'rails app' do

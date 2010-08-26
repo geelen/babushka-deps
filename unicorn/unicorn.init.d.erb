@@ -45,6 +45,10 @@ restart|reload)
 	echo >&2 "Couldn't reload, starting '$CMD' instead"
 	$CMD
 	;;
+switcharoo)
+	sig USR2 && echo signalled OK && exit 0
+  echo >&2 "Didn't signal ok :("
+	;;
 upgrade)
 	if sig USR2 && sleep 2 && sig 0 && oldsig QUIT
 	then

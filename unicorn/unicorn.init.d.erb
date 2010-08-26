@@ -11,7 +11,7 @@ set -e
 TIMEOUT=60
 APP_ROOT=<%= var :absolute_rails_root %>
 PID=<%= var :app_pid_dir %>/unicorn.pid
-CMD="<%= var :bin_path %>/unicorn -D -c <% var :unicorn_config_within_app %>"
+CMD="<%= var :bin_path %>/unicorn_rails -D -E <%= var :rails_env %> -c <%= var :unicorn_config_within_app %>"
 action="$1"
 set -u
 

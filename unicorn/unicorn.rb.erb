@@ -1,7 +1,7 @@
 # <%= generated_by_babushka %>
 
 worker_processes <%= var(:num_unicorn_workers) %>
-working_directory <%= var(:absolute_rails_root) %>
+working_directory "<%= var(:absolute_rails_root) %>"
 
 # This loads the application in the master process before forking
 # worker processes
@@ -41,6 +41,6 @@ after_fork do |server, worker|
   defined?(ActiveRecord::Base) and
     ActiveRecord::Base.establish_connection
 
-  child_pid = "<%= var(:app_log_dir) %>/unicorn_#{worker.nr}.pid"
+  child_pid = "<%= var(:app_pid_dir) %>/unicorn_#{worker.nr}.pid"
   open(child_pid,'w') {|f| f << $$}
 end

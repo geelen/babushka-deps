@@ -12,7 +12,7 @@ meta :crontab do
       }}
     }
     meet {
-      shell("crontab -", :input => lines_to_add.map { |lines| lines.map { |schedule, command| "#{schedule}   #{command}" }.join("\n") }.join("\n"))
+      shell("crontab -", :input => lines_to_add.map { |lines| lines.map { |schedule, command| "#{schedule}   #{command}" }.join("\n") }.join("\n") + "\n")
     }
   }
 end

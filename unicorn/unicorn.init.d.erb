@@ -46,8 +46,8 @@ restart|reload)
 	$CMD
 	;;
 switcharoo)
-	sig USR2 && echo signalled OK && exit 0
-  echo >&2 "Didn't signal ok :("
+  cp $PID $old_pid && echo old pid copied && $CMD && echo started ok && exit 0
+  echo >&2 "Something went wrong :("
 	;;
 upgrade)
 	if sig USR2 && sleep 2 && sig 0 && oldsig QUIT

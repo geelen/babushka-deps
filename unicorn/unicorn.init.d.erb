@@ -46,7 +46,7 @@ restart|reload)
 	$CMD
 	;;
 switcharoo)
-  cp $PID $old_pid && echo old pid copied && $CMD && echo started ok && exit 0
+  mv $PID $old_pid && echo old pid moved && $CMD && echo started ok && exit 0
   echo >&2 "Something went wrong :("
 	;;
 upgrade)

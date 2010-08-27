@@ -42,7 +42,8 @@ force-stop)
 	;;
 restart)
   mv $PID $old_pid && echo old pid moved && $CMD && echo started ok && exit 0
-  echo >&2 "Something went wrong :("
+  echo >&2 "!!!! Something went wrong, trying to start anyway"
+  $CMD
 	;;
 reopen-logs)
 	sig USR1

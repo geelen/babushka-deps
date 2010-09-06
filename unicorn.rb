@@ -25,7 +25,7 @@ end
 
 dep 'unicorn started' do
   requires 'unicorn rc script'
-  helper(:unicorn_pid) { var(:app_pid_dir) / 'unicorn.pd' }
+  helper(:unicorn_pid) { var(:app_pid_dir) / 'unicorn.pid' }
   met? {
     unicorn_pid.exist? && sudo("ps `cat #{haproxy_pid}`")
   }

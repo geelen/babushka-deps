@@ -28,7 +28,7 @@ dep 'unicorn started' do
   met? {
     unicorn_pid.exist? && sudo("ps `cat #{haproxy_pid}`")
   }
-  meet? {
+  meet {
     sudo "/etc/init.d/unicorn start"
     30.times { if unicorn_pid.exist? then break else sleep 0.1 end }
   }

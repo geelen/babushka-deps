@@ -34,7 +34,7 @@ dep 'unicorn started' do
   }
 end
 
-dep 'unicorn rc script'
+dep 'unicorn rc script' do
   requires 'benhoskings:rcconf.managed'
   met? { shell("rcconf --list").val_for('unicorn') == 'on' }
   meet {

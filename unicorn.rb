@@ -1,4 +1,5 @@
 dep 'unicorn.gem' do
+  installs 'unicorn' => '1.1.3'
   provides "unicorn", "unicorn_rails"
 end
 

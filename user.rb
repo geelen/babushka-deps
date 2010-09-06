@@ -39,24 +39,3 @@ dep 'user exists' do
       sudo "chmod 701 #{var(:home_dir_base) / var(:username)}"
   }
 end
-
-module Babushka
-  module RunHelpers
-    def read_file filename
-     path = filename.p
-     path.read.chomp if path.exists?
-    end
-
-    def hostname
-      shell 'hostname -f'
-    end
-  end
-end
-
-dep 'system' do
-  setup {
-    raise "Monkey patching read_file failed to work!" unless defined? read_file
-    raise "Monkey patching hostname failed to work!" unless defined? hostname
-  }
-  requires 'benhoskings:system'
-end

@@ -23,13 +23,24 @@ dep 'unicorn config generated' do
 end
 
 dep 'unicorn started' do
+  requires 'unicorn rc script'
+  helper(:unicorn_pid) { var(:app_pid_dir) / 'unicorn.pd' }
+  met? {
+    unicorn_pid.exist? && sudo("ps `cat #{haproxy_pid}`")
+  }
+  meet? {
+    sudo "/etc/init.d/unicorn start"
+    30.times { if unicorn_pid.exist? then break else sleep 0.1 end }
+  }
+end
+
+dep 'unicorn rc script'
   requires 'benhoskings:rcconf.managed'
   met? { shell("rcconf --list").val_for('unicorn') == 'on' }
   meet {
     render_erb 'unicorn/unicorn.init.d.erb', :to => '/etc/init.d/unicorn', :perms => '755', :sudo => true
     sudo 'update-rc.d unicorn defaults'
   }
-  after { sudo "/etc/init.d/unicorn start" }
 end
 
 dep 'unicorn workers monitored' do

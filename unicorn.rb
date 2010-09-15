@@ -15,7 +15,7 @@ dep 'unicorn config in place' do
     set :unicorn_config_within_app, var(:rails_root) / 'config/unicorn.rb'
   }
   met? { var(:unicorn_config_within_app).exists? }
-  met? { shell "ln -sf #{var :unicorn_config} #{var :unicorn_config_within_app}" }
+  meet { shell "ln -sf #{var :unicorn_config} #{var :unicorn_config_within_app}" }
 end
 
 dep 'unicorn config generated' do

@@ -6,8 +6,9 @@ end
 
 dep 'bundler installed' do
   requires 'bundler.gem', 'local gemdir writable'
+  define_var :bundler_installed_locally, :default => 'n'
   met? { in_dir(var(:rails_root)) { shell "bundle check", :log => true } }
-  meet { in_dir(var(:rails_root)) { sudo "bundle install --without test,cucumber", :log => true }}
+  meet { in_dir(var(:rails_root)) { sudo "bundle install --without test,cucumber #{'--local' if var(:bundler_installed_locally).starts_with? 'y'}", :log => true }}
 end
 
 dep 'bundler.gem' do

@@ -55,3 +55,11 @@ dep 'libxslt-dev.managed' do
   installs { via :apt, 'libxslt1-dev' }
   provides []
 end
+
+dep 'rails app chowned' do
+  met? { @rails_app_chowned_run }
+  meet {
+    sudo "chown -R #{var(:username)}:#{var(:username)} #{var(:rails_root)}"
+    @rails_app_chowned_run = true
+  }
+end

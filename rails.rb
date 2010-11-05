@@ -1,9 +1,3 @@
-dep 'rails app db yaml present' do
-  helper(:db_yaml) { var(:rails_root) / "config" / "database.yml" }
-  met? { db_yaml.exists? }
-  meet { shell "cp #{var(:rails_root) / "config" / "database.*#{var(:rails_env)}*"} #{db_yaml}" }
-end
-
 dep 'local gemdir writable' do
   helper(:local_path) { "~/.gem".p }
   met? { File.writable_real?(local_path) }
@@ -19,17 +13,6 @@ dep 'rails app' do
   define_var :rails_root, :default => '~/current', :type => :path
   setup {
     set :vhost_type, 'passenger'
-  }
-end
-
-dep 'db set up' do
-  requires 'benhoskings:deployed app', 'existing db'
-  setup {
-    if (db_config = yaml(var(:rails_root) / 'config/database.yml')[var(:rails_env)]).nil?
-      log_error "There's no database.yml entry for the #{var(:rails_env)} environment."
-    else
-      set :db_name, db_config['database']
-    end
   }
 end
 

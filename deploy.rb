@@ -19,7 +19,7 @@ dep 'db migrations up-to-date' do #DONE
 end
 
 dep 'bundle up-to-date' do
-  requires 'codes up-to-date'
+  requires 'codes up-to-date',
            'benhoskings:app bundled'
 end
 

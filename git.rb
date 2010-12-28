@@ -22,3 +22,8 @@ dep 'github alias' do
     set :key_file, "~/.ssh/github_key"
   }
 end
+
+dep 'git.src' do
+  provides 'git 1.7.3.4'
+  source 'http://kernel.org/pub/software/scm/git/git-1.7.3.4.tar.bz2'
+end

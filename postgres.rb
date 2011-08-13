@@ -30,7 +30,7 @@ end
 
 dep 'interpunct is a dash' do
   met? { grep /•\t-/, var(:postgres_shared_path) / 'tsearch_data/unaccent.rules' }
-  meet { shell 'echo -e "•\t-" >> ' + var(:postgres_shared_path) / 'tsearch_data/unaccent.rules' }
+  meet { sudo 'echo -e "•\t-" >> ' + var(:postgres_shared_path) / 'tsearch_data/unaccent.rules' }
 end
 
 dep 'text search configuration installed' do

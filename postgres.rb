@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 dep 'postgres has a simple unaccenting dictionary' do
   define_var :search_configuration_name, :default => 'simple_unaccenting'
   define_var :postgres_shared_path, :default => '/usr/share/postgresql/9.0'

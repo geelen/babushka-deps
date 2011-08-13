@@ -21,7 +21,7 @@ dep 'postgresql-contrib.managed' do
 end
 
 dep 'unaccent files exist' do
-  requires_if_unmet 'postgresql-contrib.managed'
+  requires_when_unmet 'postgresql-contrib.managed'
   met? {
     (var(:postgres_shared_path) / 'contrib/unaccent.sql').exists? &&
     (var(:postgres_shared_path) / 'tsearch_data/unaccent.rules').exists?

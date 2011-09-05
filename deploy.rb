@@ -4,6 +4,7 @@ end
 
 dep 'post-receive' do
   define_var :app_env, :default => :production
+  define_var :app_root, :default => '.'
   requires [
     'benhoskings:ref info extracted.repo',
     'benhoskings:branch exists.repo',

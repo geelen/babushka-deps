@@ -21,3 +21,11 @@ dep 'post-receive' do
     'after deploy'
   ]
 end
+
+# These are looked up with Dep() so they're just skipped if they don't exist.
+dep 'on deploy' do
+  requires Dep('current dir:on deploy')
+end
+dep 'after deploy' do
+  requires Dep('current dir:after deploy')
+end

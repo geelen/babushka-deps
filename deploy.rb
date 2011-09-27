@@ -2,7 +2,7 @@ dep 'pre-receive', :git_ref_data do
   requires 'benhoskings:ready for update.repo'.with(git_ref_data)
 end
 
-dep 'post-receive', :git_ref_data, :env do
+dep 'post-receive', :git_ref_data, :env, :template => 'benhoskings:repo' do
   def ref_info
     old_id, new_id, branch = git_ref_data.to_s.scan(ref_data_regexp).flatten
     {:old_id => old_id, :new_id => new_id, :branch => branch}

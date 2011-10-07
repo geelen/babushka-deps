@@ -1,5 +1,5 @@
 dep 'pre-receive', :git_ref_data do
-  requires 'benhoskings:ready for update.repo'.with(git_ref_data)
+  requires 'benhoskings:ready for update.repo'.with(:git_ref_data => git_ref_data)
 end
 
 dep 'post-receive', :git_ref_data, :env, :template => 'benhoskings:repo' do

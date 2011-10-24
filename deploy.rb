@@ -3,18 +3,16 @@ dep 'pre-receive', :git_ref_data do
 end
 
 dep 'post-receive', :git_ref_data, :env, :template => 'benhoskings:repo' do
-  def ref_info
-    old_id, new_id, branch = git_ref_data.to_s.scan(ref_data_regexp).flatten
-    {:old_id => old_id, :new_id => new_id, :branch => branch}
-  end
-  env.default!('production')
+  env.default!(ENV['RAILS_ENV'] || 'production')
   requires [
     'benhoskings:on correct branch.repo'.with(ref_info[:branch]),
     'benhoskings:HEAD up to date.repo'.with(ref_info),
     'benhoskings:app bundled'.with(:root => '.', :env => env),
 
-    # This and the 'maintenace' one below are separate so the 'current dir'
-    # deps load lazily from the new code checked out by 'HEAD up to date.repo'.
+    # This and 'after deploy' below are separated so the deps in 'current dir'
+    # they refer to load from the new code checked out by 'HEAD up to date.repo'.
+    # Normally it would be fine because dep loading is lazy, but the "if Dep('...')"
+    # checks trigger a source load when called.
     'on deploy'.with(ref_info[:old_id], ref_info[:new_id], ref_info[:branch], env),
 
     'benhoskings:app flagged for restart.task',

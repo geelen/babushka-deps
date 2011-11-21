@@ -67,3 +67,17 @@ alter text search configuration #{search_configuration_name}
 }
   }
 end
+
+dep 'dummy unaccenting dictionary installed', :db_name do
+  if !db_name.set? && ENV["DATABASE_URL"]
+    begin
+      uri = URI.parse(ENV["DATABASE_URL"])
+    rescue URI::InvalidURIError
+      raise "Invalid DATABASE_URL"
+    end
+    db_name = uri.path.split("/")[1]
+  end
+
+  met? { shell("psql #{db_name} -c '\\dFd'") =~ /unaccenting_english_stemmer/ }
+  meet { shell("psql #{db_name} -c 'create text search configuration public.unaccenting_english_stemmer (copy = pg_catalog.english);") }
+end

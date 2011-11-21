@@ -32,7 +32,7 @@ end
 dep 'unaccent files exist', :postgres_shared_path do
   requires_when_unmet 'postgresql-contrib.managed'
   met? {
-    (postgres_shared_path.to_s / 'contrib/unaccent.sql').exists? &&
+    (postgres_shared_path.to_s / 'extension/unaccent--1.0.sql').exists? &&
     (postgres_shared_path.to_s / 'tsearch_data/unaccent.rules').exists?
   }
 end

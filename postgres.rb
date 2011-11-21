@@ -12,7 +12,7 @@ dep 'postgres has a unaccenting stemming dictionary', :db_name, :dictionary_name
 
   dictionary_name.default! 'english_stemmer'
   search_configuration_name.default! 'unaccenting_english_stemmer'
-  postgres_shared_path.default! '/usr/share/postgresql/9.0'
+  postgres_shared_path.default! '/usr/share/postgresql/9.1'
   requires [
     'unaccenting installed'.with(db_name, postgres_shared_path),
     'english stemming dictionary installed'.with(db_name, dictionary_name),

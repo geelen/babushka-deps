@@ -7,7 +7,7 @@ dep 'postgres has a unaccenting stemming dictionary', :db_name, :dictionary_name
     rescue URI::InvalidURIError
       raise "Invalid DATABASE_URL"
     end
-    db_name = uri.path.split("/")[1]
+    db_name.default! uri.path.split("/")[1]
   end
 
   dictionary_name.default! 'english_stemmer'

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-dep 'postgres has a unaccenting stemming dictionary', :db_name do
+dep 'postgres has a unaccenting stemming dictionary', :db_name, :dictionary_name, :search_configuration_name, :postgres_shared_path do
   if !db_name.set? && ENV["DATABASE_URL"]
     begin
       uri = URI.parse(ENV["DATABASE_URL"])
@@ -10,30 +10,30 @@ dep 'postgres has a unaccenting stemming dictionary', :db_name do
     db_name = uri.path.split("/")[1]
   end
 
-  define_var :dictionary_name, :default => 'english_stemmer'
-  define_var :search_configuration_name, :default => 'unaccenting_english_stemmer'
-  define_var :postgres_shared_path, :default => '/usr/share/postgresql/9.0'
+  dictionary_name.default! 'english_stemmer'
+  search_configuration_name.default! 'unaccenting_english_stemmer'
+  postgres_shared_path.default! '/usr/share/postgresql/9.0'
   requires [
-    'unaccenting installed'.with(db_name),
-    'english stemming dictionary installed'.with(db_name),
-    'text search configuration installed'.with(db_name)
+    'unaccenting installed'.with(db_name, postgres_shared_path),
+    'english stemming dictionary installed'.with(db_name, dictionary_name),
+    'text search configuration installed'.with(db_name, dictionary_name, search_configuration_name)
   ]
 end
 
-dep 'unaccenting installed' do
-  requires 'unaccent files exist', 'interpunct is a dash'
-  met? { shell("psql #{var(:db_name)} -c '\\dFd'") =~ /public.*unaccent/ }
+dep 'unaccenting installed', :db_name, :postgres_shared_path do
+  requires 'unaccent files exist'.with(postgres_shared_path), 'interpunct is a dash'.with(postgres_shared_path)
+  met? { shell("psql #{db_name} -c '\\dFd'") =~ /public.*unaccent/ }
   meet {
-    sudo "cat #{var(:postgres_shared_path) / 'contrib/unaccent.sql'} | psql #{var :db_name}",
+    sudo "cat #{postgres_shared_path / 'contrib/unaccent.sql'} | psql #{db_name}",
          :as => 'postgres'
   }
 end
 
-dep 'unaccent files exist' do
+dep 'unaccent files exist', :postgres_shared_path do
   requires_when_unmet 'postgresql-contrib.managed'
   met? {
-    (var(:postgres_shared_path) / 'contrib/unaccent.sql').exists? &&
-    (var(:postgres_shared_path) / 'tsearch_data/unaccent.rules').exists?
+    (postgres_shared_path / 'contrib/unaccent.sql').exists? &&
+    (postgres_shared_path / 'tsearch_data/unaccent.rules').exists?
   }
 end
 
@@ -42,28 +42,28 @@ dep 'postgresql-contrib.managed' do
   provides []
 end
 
-dep 'interpunct is a dash' do
-  met? { grep /•\t-/, var(:postgres_shared_path) / 'tsearch_data/unaccent.rules' }
-  meet { sudo 'echo -e "•\t-" >> ' + var(:postgres_shared_path) / 'tsearch_data/unaccent.rules' }
+dep 'interpunct is a dash', :postgres_shared_path do
+  met? { grep /•\t-/, postgres_shared_path / 'tsearch_data/unaccent.rules' }
+  meet { sudo 'echo -e "•\t-" >> ' + postgres_shared_path / 'tsearch_data/unaccent.rules' }
 end
 
-dep 'english stemming dictionary installed' do
-  met? { shell("psql #{var(:db_name)} -c '\\dFd'") =~ /public.*#{var :dictionary_name}/ }
+dep 'english stemming dictionary installed', :db_name, :dictionary_name do
+  met? { shell("psql #{db_name} -c '\\dFd'") =~ /public.*#{dictionary_name}/ }
   meet {
-    shell "psql #{var(:db_name)}", :input => %Q{
-CREATE TEXT SEARCH DICTIONARY public.#{var :dictionary_name} (TEMPLATE = pg_catalog.snowball, LANGUAGE = english);
+    shell "psql #{db_name}", :input => %Q{
+CREATE TEXT SEARCH DICTIONARY public.#{dictionary_name} (TEMPLATE = pg_catalog.snowball, LANGUAGE = english);
 }
     }
 end
 
-dep 'text search configuration installed' do
-  met? { shell("psql #{var(:db_name)} -c '\\dF'") =~ /public.*#{var :search_configuration_name}/ }
+dep 'text search configuration installed', :db_name, :dictionary_name, :search_configuration_name do
+  met? { shell("psql #{db_name} -c '\\dF'") =~ /public.*#{search_configuration_name}/ }
   meet {
-    shell "psql #{var(:db_name)}", :input => %Q{
-create text search configuration public.#{var :search_configuration_name} (copy = pg_catalog.english);
-alter text search configuration #{var :search_configuration_name}
+    shell "psql #{db_name}", :input => %Q{
+create text search configuration public.#{search_configuration_name} (copy = pg_catalog.english);
+alter text search configuration #{search_configuration_name}
   alter mapping for asciihword, asciiword, hword, hword_asciipart, hword_numpart, hword_part, word
-  with unaccent, #{var :dictionary_name};
+  with unaccent, #{dictionary_name};
 }
   }
 end

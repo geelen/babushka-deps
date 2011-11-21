@@ -69,14 +69,13 @@ alter text search configuration #{search_configuration_name}
 end
 
 dep 'dummy unaccenting dictionary installed', :db_name do
-  p ENV["DATABASE_URL"]
-  if ENV["DATABASE_URL"]
+  if !db_name.set? && ENV["DATABASE_URL"]
     begin
       uri = URI.parse(ENV["DATABASE_URL"])
     rescue URI::InvalidURIError
       raise "Invalid DATABASE_URL"
     end
-    db_name = uri.path.split("/")[1]
+    db_name.default! uri.path.split("/")[1]
   end
  
   met? { shell("psql #{db_name} -c '\\dFd'") =~ /unaccenting_english_stemmer/ }

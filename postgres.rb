@@ -24,7 +24,7 @@ dep 'unaccenting installed', :db_name, :postgres_shared_path do
   requires 'unaccent files exist'.with(postgres_shared_path), 'interpunct is a dash'.with(postgres_shared_path)
   met? { shell("psql #{db_name} -c '\\dFd'") =~ /public.*unaccent/ }
   meet {
-    sudo "cat #{postgres_shared_path / 'contrib/unaccent.sql'} | psql #{db_name}",
+    sudo "cat #{postgres_shared_path / 'extension/unaccent--1.0.sql'} | psql #{db_name}",
          :as => 'postgres'
   }
 end
